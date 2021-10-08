@@ -4,7 +4,7 @@ from emoji import emojize
 
 
 def start_keyboard():
-    return ReplyKeyboardMarkup([["Создать анкету", "Уже есть анкета"]])
+    return ReplyKeyboardMarkup([["Создать анкету", "Уже есть анкета"]], one_time_keyboard=True)
 
 
 def subjects_keyboard():
@@ -15,7 +15,7 @@ def subjects_keyboard():
 
 
 def yes_no_keyboard():
-    return ReplyKeyboardMarkup([["Да", "Нет"]])
+    return ReplyKeyboardMarkup([["Да", "Нет"]], one_time_keyboard=True)
 
 
 def how_know_keyboard():

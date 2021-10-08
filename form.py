@@ -39,13 +39,16 @@ def form_call(update, contex):
 
 
 def form_subjects_know(update, contex):
-    user_subject = update.message.text
+    user_message = update.message.text
+    num = [str(i) for i in range(1, 11)]
 
-    if user_subject == "/stop":
+    if user_message == "/stop":
         contex.user_data.clear()
         return ConversationHandler.END
+    elif user_message in num:
+        contex.user_data["form"]["bad_know"][-1][1] = int(user_message)
     else:
-        contex.user_data["form"] = {"bad_know": user_subject}
+
         smile = emojize(settings.EMOJI[3], use_aliases=True)
         update.message.reply_text(f"Выберите предмет для  оценки{smile}",
                                   reply_markup=subjects_keyboard())
@@ -61,6 +64,10 @@ def form_how_know(update, contex):
         form_that_all(update, contex)
         return
     else:
+        if contex.user_data["form"].get("bad_know") is None:
+            contex.user_data["form"] = {"bad_know": [user_message, 0]}
+        else:
+            contex.user_data["form"]["bad_know"].append([user_message, 0])
         update.message.reply_text("Оцените ваш уровень знаний по предмету от 1 до 10, "
                                   "где чем меньше число, тем хуже знаешь предмет", reply_markup=how_know_keyboard())
         return "subjects_know"
@@ -70,4 +77,9 @@ def form_that_all(update, contex):
     smile = emojize(settings.EMOJI[4], use_aliases=True)
     update.message.reply_text(f"Отлично!{smile} Теперь мы можем подобрать вам друга для учёбы. Найти?",
                               reply_markup=yes_no_keyboard())
+    print(contex.user_data["form"])
+
+
+
+
 

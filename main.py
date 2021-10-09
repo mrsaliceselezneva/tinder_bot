@@ -18,6 +18,8 @@ def main():
                       CommandHandler("anketa", form_start)],
         states={"name": [MessageHandler(Filters.text, form_name)],
                 "call": [MessageHandler(Filters.text, form_call)],
+                "place_of_study": [MessageHandler(Filters.text, form_place_of_study)],
+                "level_of_study": [MessageHandler(Filters.text, form_level_of_study)],
                 "subjects_know": [MessageHandler(Filters.text, form_subjects_know)],
                 "how_know": [MessageHandler(Filters.text, form_how_know)],
                 },

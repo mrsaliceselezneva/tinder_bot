@@ -1,13 +1,2 @@
 INFO:root:bot has started
 INFO:apscheduler.scheduler:Scheduler started
-ERROR:telegram.ext.dispatcher:No error handlers are registered, logging exception.
-Traceback (most recent call last):
-  File "D:\”л√“”\олимпиады\хакатон\tinder\venv\lib\site-packages\telegram\ext\dispatcher.py", line 555, in process_update
-    handler.handle_update(update, self, check, context)
-  File "D:\”л√“”\олимпиады\хакатон\tinder\venv\lib\site-packages\telegram\ext\conversationhandler.py", line 626, in handle_update
-    new_state = handler.handle_update(update, dispatcher, check_result, context)
-  File "D:\”л√“”\олимпиады\хакатон\tinder\venv\lib\site-packages\telegram\ext\handler.py", line 198, in handle_update
-    return self.callback(update, context)
-  File "D:\”л√“”\олимпиады\хакатон\tinder\form.py", line 25, in form_name
-    contex.user_data["form"].insert({"name": user_name})
-AttributeError: 'dict' object has no attribute 'insert'

@@ -4,6 +4,7 @@ from telegram.ext import ConversationHandler
 import settings
 from emoji import emojize
 from utils import *
+from keyboards import *
 
 
 def form_start(update, contex):
@@ -28,12 +29,38 @@ def form_name(update, contex):
 
 
 def form_call(update, contex):
-    user_call = update.message.text.split()
+    user_call = update.message.text
     if user_call == "/stop":
         contex.user_data.clear()
         return ConversationHandler.END
     else:
         contex.user_data["form"]["call"] = user_call
+        update.message.reply_text(f"Выберете место обучения",
+                                  reply_markup=school_university_keyboard())
+        return "place_of_study"
+
+
+def form_place_of_study(update, contex):
+    user_message = update.message.text
+    if user_message == "/stop":
+        contex.user_data.clear()
+        return ConversationHandler.END
+    else:
+        contex.user_data["form"]["place_of_study"] = user_message
+        if user_message == "Школа":
+            update.message.reply_text("Выберите ваш год обучения", reply_markup=class_keyboard())
+        else:
+            update.message.reply_text("Выберите ваш год обучения", reply_markup=course_keyboard())
+        return "level_of_study"
+
+
+def form_level_of_study(update, contex):
+    user_message = update.message.text
+    if user_message == "/stop":
+        contex.user_data.clear()
+        return ConversationHandler.END
+    else:
+        contex.user_data["form"]["level_of_study"] = int(user_message)
         smile = emojize(settings.EMOJI[3], use_aliases=True)
         update.message.reply_text(f"Оцените знания по предметам{smile}", reply_markup=subjects_keyboard())
         contex.user_data["form"]["subjects"] = []

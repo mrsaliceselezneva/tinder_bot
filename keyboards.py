@@ -34,7 +34,7 @@ def course_keyboard():
     num = [[], []]
     for i in range(1, 4):
         num[0].append(i)
-    for i in range(4, 6):
+    for i in range(4, 7):
         num[1].append(i)
     return ReplyKeyboardMarkup(num, one_time_keyboard=True)
 

@@ -39,7 +39,7 @@ def create_db():
            "Физика", "Химия",
            "Русский", "Литература"]
     for i in sub:
-        Subject.insert(title = i).execute()
+        Subject.insert(title = i).on_conflict_ignore().execute()
     close_db()
 
 
@@ -52,12 +52,13 @@ def check_user(user_id):
 
 def add(user_data):
     connect_db()
+    user_data['place_of_study'] = 1 if user_data['place_of_study'] == 'Университет' else 0
     if Users.get_or_none(user_data["user_id"]):
-        Users.update(name = " ".join(user_data["name"]), place = 0, form = 0,
-                     link = user_data["call"][0]).where(Users.user_id == user_data["user_id"]).execute()
+        Users.update(name = " ".join(user_data["name"]), place = user_data['place_of_study'], form = user_data['level_of_study'],
+                     link = user_data["call"]).where(Users.user_id == user_data["user_id"]).execute()
     else:
-        Users.insert(user_id = user_data["user_id"], name = " ".join(user_data["name"]), place = 0, form = 0,
-                     link = user_data["call"][0]).on_conflict_ignore().execute()  # plase and form удалить
+        Users.insert(user_id = user_data["user_id"], name = " ".join(user_data["name"]), place = user_data['place_of_study'], form = user_data['level_of_study'],
+                     link = user_data["call"]).on_conflict_ignore().execute()
     for i in user_data["subjects"]:
         sub = Subject.select(Subject.sub_id).where(Subject.title == i[0])
         print(sub[0])

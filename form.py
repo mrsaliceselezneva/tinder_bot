@@ -22,7 +22,7 @@ def form_name(update, contex):
         return "name"
     else:
         contex.user_data["form"] = {"user_id": update.message.from_user.id}
-        contex.user_data["form"].insert({"name": user_name})
+        contex.user_data["form"]["name"] = user_name
         update.message.reply_text(f"Укажите вашу ссылку на телеграм или вк", reply_markup=None)
         return "call"
 
@@ -33,10 +33,10 @@ def form_call(update, contex):
         contex.user_data.clear()
         return ConversationHandler.END
     else:
-        contex.user_data["form"].insert({"call": user_call})
+        contex.user_data["form"]["call"] = user_call
         smile = emojize(settings.EMOJI[3], use_aliases=True)
         update.message.reply_text(f"Оцените знания по предметам{smile}", reply_markup=subjects_keyboard())
-        contex.user_data["form"].insert({"subjects": []})
+        contex.user_data["form"]["subjects"] = []
         return "how_know"
 
 

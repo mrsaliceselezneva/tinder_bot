@@ -2,6 +2,7 @@ import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
 
 import settings
+from bd_work import *
 from form import *
 from utils import start, help, any_message
 
@@ -29,6 +30,10 @@ def main():
     disp.add_handler(form)
     disp.add_handler(CommandHandler("start", start))
     disp.add_handler(CommandHandler("help", help))
+    disp.add_handler(MessageHandler(Filters.regex("^(Изменить анкету)$"), bd_edit_anketa))
+    disp.add_handler(CommandHandler("edit_anketa", bd_edit_anketa))
+    disp.add_handler(MessageHandler(Filters.regex("^(Найти друга)$"), bd_search))
+    disp.add_handler(CommandHandler("search", bd_search))
     disp.add_handler(MessageHandler(Filters.text, any_message))
 
     logging.info("bot has started")

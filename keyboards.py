@@ -2,7 +2,7 @@ from telegram import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, 
 
 
 def start_keyboard():
-    return ReplyKeyboardMarkup([["Найти пользователя", "Создать анкету", "Изменить анкету"]], one_time_keyboard=True)
+    return ReplyKeyboardMarkup([["Найти друга", "Создать анкету", "Изменить анкету"]], one_time_keyboard=True)
 
 
 def subjects_keyboard():
@@ -32,9 +32,9 @@ def how_know_keyboard():
 
 def course_keyboard():
     num = [[], []]
-    for i in range(1, 3):
+    for i in range(1, 4):
         num[0].append(i)
-    for i in range(3, 5):
+    for i in range(4, 6):
         num[1].append(i)
     return ReplyKeyboardMarkup(num, one_time_keyboard=True)
 

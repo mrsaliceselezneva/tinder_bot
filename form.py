@@ -102,3 +102,5 @@ def form_that_all(update, contex):  # вот тут по имхо должна �
                               reply_markup=start_keyboard())
     contex.user_data.clear()
     return ConversationHandler.END
+
+

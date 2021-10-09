@@ -10,7 +10,8 @@ def start(update, contex):
 
 
 def help(update, contex):
-    update.message.reply_text("/start - запустить бота\n/help - получить список команд\n/anketa - создать анкету")
+    update.message.reply_text("/start - запустить бота\n/help - получить список команд\n/anketa - создать анкету"
+                              "\n/edit_anketa - изменить анкету\n/search - найти друга")
 
 
 def any_message(update, contex):

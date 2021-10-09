@@ -2,10 +2,11 @@ import logging
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
 
 import settings
+from bd_work import *
 from form import *
 from utils import start, help, any_message
 
-logging.basicConfig(filename= "bot.log", level=logging.INFO, filemode= "w")
+logging.basicConfig(filename="bot.log", level=logging.INFO, filemode="w")
 
 
 def main():
@@ -15,10 +16,11 @@ def main():
 
     form = ConversationHandler(
         entry_points=[MessageHandler(Filters.regex("^(Создать анкету)$"), form_start),
-                      MessageHandler(Filters.regex("^(Изменить анкету)$"), form_start),
                       CommandHandler("anketa", form_start)],
         states={"name": [MessageHandler(Filters.text, form_name)],
                 "call": [MessageHandler(Filters.text, form_call)],
+                "place_of_study": [MessageHandler(Filters.text, form_place_of_study)],
+                "level_of_study": [MessageHandler(Filters.text, form_level_of_study)],
                 "subjects_know": [MessageHandler(Filters.text, form_subjects_know)],
                 "how_know": [MessageHandler(Filters.text, form_how_know)],
                 },
@@ -28,6 +30,10 @@ def main():
     disp.add_handler(form)
     disp.add_handler(CommandHandler("start", start))
     disp.add_handler(CommandHandler("help", help))
+    disp.add_handler(MessageHandler(Filters.regex("^(Изменить анкету)$"), bd_edit_anketa))
+    disp.add_handler(CommandHandler("edit_anketa", bd_edit_anketa))
+    disp.add_handler(MessageHandler(Filters.regex("^(Найти друга)$"), bd_search))
+    disp.add_handler(CommandHandler("search", bd_search))
     disp.add_handler(MessageHandler(Filters.text, any_message))
 
     logging.info("bot has started")

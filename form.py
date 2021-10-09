@@ -37,7 +37,7 @@ def form_call(update, contex):
         smile = emojize(settings.EMOJI[3], use_aliases=True)
         update.message.reply_text(f"Оцените знания по предметам{smile}", reply_markup=subjects_keyboard())
         contex.user_data["form"] = {"subjects": []}
-        return "subjects"
+        return "how_know"
 
 
 def form_subjects_know(update, contex):
@@ -52,7 +52,7 @@ def form_subjects_know(update, contex):
         smile = emojize(settings.EMOJI[3], use_aliases=True)
         update.message.reply_text(f"Выберите предмет для  оценки{smile}",
                                   reply_markup=subjects_keyboard())
-        return "subjects"
+        return "how_know"
 
 
 def form_how_know(update, contex):

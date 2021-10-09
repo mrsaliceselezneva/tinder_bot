@@ -69,16 +69,28 @@ def add(user_data):
     close_db()
 
 
+def find_person(user_id):
+    connect_db()
+    trouble = Marks.select(Marks.sub).where((Marks.user == user_id) & (Marks.mark < 7))
+    qq = Marks.select(Marks.user, fn.COUNT(Marks.sub), fn.SUM(Marks.mark)).where(
+        (Marks.user != user_id) & (Marks.mark > 6) & (Marks.sub.in_(trouble))).group_by(Marks.user).order_by(
+        -fn.COUNT(Marks.sub), -fn.SUM(Marks.mark))
+    qq = qq.dicts()
+    res = Users.select(Users.name, Users.link).where(qq[0]['user']).dicts()
+    close_db()
+    return res
+
+
 def close_db():
     psql_db.close()
     print("БД Отключена")
 
 
 def main():
-    query1 = Marks.select(Users.user_id, Marks.sub, Marks.mark).join_from(Marks, Users).dicts()
-    temp = Users.insert(user_id = 123, name = "5654564", place = 0, form = 0)
-    temp.execute()
-    for i in query1:
+    trouble = Marks.select(Marks.sub).where((Marks.user == '611120147') & (Marks.mark < 7))
+    people = []
+    qq = Marks.select().where((Marks.user != '611120147') & (Marks.mark > 6) & (Marks.sub.in_(trouble)))
+    for i in qq:
         print(i)
 
 

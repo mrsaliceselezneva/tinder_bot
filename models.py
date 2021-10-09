@@ -49,13 +49,23 @@ def check_user(user_id):
     close_db()
     return temp
 
+
 def add(user_data):
     connect_db()
-    Users.insert(user_id = user_data["user_id"], name = " ".join(user_data["name"]), place = 0, form = 0,
-                 link = user_data["call"][0]).on_conflict_replase().execute()  # plase and form удалить
+    if Users.get_or_none(user_data["user_id"]):
+        Users.update(name = " ".join(user_data["name"]), place = 0, form = 0,
+                     link = user_data["call"][0]).where(Users.user_id == user_data["user_id"]).execute()
+    else:
+        Users.insert(user_id = user_data["user_id"], name = " ".join(user_data["name"]), place = 0, form = 0,
+                     link = user_data["call"][0]).on_conflict_ignore().execute()  # plase and form удалить
     for i in user_data["subjects"]:
         sub = Subject.select(Subject.sub_id).where(Subject.title == i[0])
-        Marks.insert(user = user_data["user_id"], sub = sub, mark = i[1]).execute()
+        print(sub[0])
+        if Marks.get_or_none((Marks.user == user_data["user_id"]) & (Marks.sub == sub[0])):
+            temp = Marks.update({Marks.mark: i[1]}).where((Marks.user == user_data["user_id"]) & (Marks.sub == sub[0]))
+            temp.execute()
+        else:
+            Marks.insert(user = user_data["user_id"], sub = sub[0], mark = i[1]).execute()
     close_db()
 
 

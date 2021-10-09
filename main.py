@@ -15,7 +15,7 @@ def main():
 
     form = ConversationHandler(
         entry_points=[MessageHandler(Filters.regex("^(Создать анкету)$"), form_start),
-                      MessageHandler(Filters.regex("^(Изменить анкету)$"), form_name),
+                      MessageHandler(Filters.regex("^(Изменить анкету)$"), form_start),
                       CommandHandler("anketa", form_start)],
         states={"name": [MessageHandler(Filters.text, form_name)],
                 "call": [MessageHandler(Filters.text, form_call)],

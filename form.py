@@ -1,6 +1,6 @@
 from telegram import ReplyKeyboardRemove
 from telegram.ext import ConversationHandler
-
+import models
 import settings
 from emoji import emojize
 from utils import *
@@ -70,8 +70,9 @@ def form_how_know(update, contex):
 
 
 def form_that_all(update, contex):  # вот тут по имхо должна быть работа с бд. занести данные пользователей в бд
+    models.add(contex.user_data["form"])
     smile = emojize(settings.EMOJI[4], use_aliases=True)
     update.message.reply_text(f"Отлично!{smile} Теперь мы можем подобрать вам друга для учёбы. Найти?",
-                              reply_markup=start_keyboard())
+                              reply_markup=start_keyboard(update))
     contex.user_data.clear()
     return ConversationHandler.END

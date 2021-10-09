@@ -1,10 +1,14 @@
 from telegram import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 import settings
+import models
 from emoji import emojize
 
 
-def start_keyboard():
-    return ReplyKeyboardMarkup([["Найти пользователя", "Создать анкету", "Изменить анкету"]], one_time_keyboard=True)
+def start_keyboard(update):
+    if models.check_user(update.message.from_user.id):
+        return ReplyKeyboardMarkup([["Найти пользователя", "Изменить анкету"]],
+                                   one_time_keyboard = True)
+    return ReplyKeyboardMarkup([["Создать анкету"]], one_time_keyboard=True)
 
 
 def subjects_keyboard():
@@ -35,7 +39,7 @@ def how_know_keyboard():
 def start(update, contex):
     smile = emojize(settings.EMOJI[1], use_aliases=True)
     update.message.reply_text(f"Привет! Я бот, который подберет тебе помощника по проблемным предметам . Начнём? "
-                              f"{smile}", reply_markup=start_keyboard())
+                              f"{smile}", reply_markup=start_keyboard(update))
 
 
 def help(update, contex):

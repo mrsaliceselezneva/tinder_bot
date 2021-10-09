@@ -5,7 +5,7 @@ import settings
 from form import *
 from utils import start, help, any_message
 
-logging.basicConfig(filename="bot.log", level=logging.INFO, filemode="w")
+logging.basicConfig(filename= "bot.log", level=logging.INFO, filemode= "w")
 
 
 def main():
@@ -15,6 +15,7 @@ def main():
 
     form = ConversationHandler(
         entry_points=[MessageHandler(Filters.regex("^(Создать анкету)$"), form_start),
+                      MessageHandler(Filters.regex("^(Изменить анкету)$"), form_name),
                       CommandHandler("anketa", form_start)],
         states={"name": [MessageHandler(Filters.text, form_name)],
                 "call": [MessageHandler(Filters.text, form_call)],
